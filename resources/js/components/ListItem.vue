@@ -20,11 +20,11 @@ const triggerNote = (note) => {
 </script>
 
 <template>
-    <div class="flex gap-2 p-1 border-b last:border-b-0">
-        <input type="checkbox" :checked="item.done" name="done" @input="triggerNote(item)">
-        <div class="flex items-center gap-2">
-            <div class="text-indigo-500">{{ item.title }}</div>
-            <div class="text-sm text-gray-400">{{ item.description }}</div>
+    <div class="flex flex-col items-start p-1 border-b last:border-b-0">
+        <div class="flex gap-2 items-center">
+            <input type="checkbox" :checked="item.done" name="done" @input="triggerNote(item)">
+            <div class="text-indigo-500 whitespace-nowrap">{{ item.title }}</div>
         </div>
+        <div class="text-sm pl-5 text-gray-400">{{ item.description }}</div>
     </div>
 </template>

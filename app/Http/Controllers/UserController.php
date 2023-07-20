@@ -12,7 +12,7 @@ class UserController extends Controller
     //login
     public function me(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user()->load('profile');
         return response($user, 200);
     }
 }

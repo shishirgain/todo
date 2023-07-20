@@ -38,17 +38,21 @@ onMounted(() => {
 
 </script>
 <template>
-    <div class="flex justify-between items-center">
-        <div class="text-4xl my-3">List</div>
+    <div class="flex justify-between my-3 items-center">
+        <div class="flex items-center gap-2">
+            <div class="text-2xl">List</div>
+            <div class="text-gray-400">[Unchecked]</div>
+        </div>
         <button class="bg-indigo-500 px-5 py-1 text-white" @click="isModalOpen = true">+ Todo</button>
     </div>
     <!-- <hr> -->
     <div>
-        <div class="text-center text-gray-500 bg-indigo-50">Todo's</div>
+        <!-- <div class="text-center text-gray-500 bg-indigo-50">Todo's</div> -->
         <ListView :list="list.filter(item => !item.done)" />
     </div>
     <div class="mt-6">
-        <div class="text-center text-gray-500 bg-indigo-50">Done</div>
+        <div class="text-gray-400" v-if="!!list.filter(item => item.done).length">[Checked]</div>
+        <!-- <div class="text-center text-gray-500 bg-indigo-50">Done</div> -->
         <ListView :list="list.filter(item => item.done)" />
     </div>
     <Modal v-if="isModalOpen" @close="close" @open="open">
