@@ -10,9 +10,22 @@ class ProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = $request->user();
+        $profile = $user->profile;
+
+        if (!$profile) {
+            $profile = Profile::create([
+                'first_name' => '',
+                'last_name' => '',
+                'address' => '',
+                'user_id' => $user->id,
+                'number' => '',
+                'color' => ''
+            ]);
+        }
+        return $profile;
     }
 
     /**
@@ -36,7 +49,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        return $profile;
     }
 
     /**
@@ -44,7 +57,7 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+        return $profile;
     }
 
     /**
@@ -52,7 +65,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+        $update = $profile->update($request->all());
+        if ($update) {
+            $response = ['profile' => $profile, 'message' => 'Update successfully'];
+            return response($response, 200);
+        }
     }
 
     /**

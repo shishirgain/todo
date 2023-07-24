@@ -1,13 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import ListView from '../components/ListView.vue'
+import Todos from '../components/Todos.vue'
+import TodosSkeleton from '../components/TodosSkeleton.vue'
 import Modal from '../components/Modal.vue'
 
-import { useAxios } from '../axios'
-
-const axios = useAxios()
-
-const list = ref([])
 const isModalOpen = ref(false)
 
 // methods
@@ -26,16 +22,6 @@ const submit = (e) => {
     }).finally(() => { })
 }
 
-const getTodos = () => {
-    axios.get('/todos').then(res => {
-        list.value = res.data
-    })
-}
-
-onMounted(() => {
-    getTodos()
-})
-
 </script>
 <template>
     <div class="flex justify-between my-3 items-center">
@@ -46,21 +32,19 @@ onMounted(() => {
         <button class="bg-indigo-500 px-5 py-1 text-white" @click="isModalOpen = true">+ Todo</button>
     </div>
     <!-- <hr> -->
-    <div>
-        <!-- <div class="text-center text-gray-500 bg-indigo-50">Todo's</div> -->
-        <ListView :list="list.filter(item => !item.done)" />
-    </div>
-    <div class="mt-6">
-        <div class="text-gray-400" v-if="!!list.filter(item => item.done).length">[Checked]</div>
-        <!-- <div class="text-center text-gray-500 bg-indigo-50">Done</div> -->
-        <ListView :list="list.filter(item => item.done)" />
-    </div>
+    <Suspense>
+        <template #default>
+            <Todos />
+        </template>
+        <template #fallback>
+            <TodosSkeleton/>
+        </template>
+    </Suspense>
     <Modal v-if="isModalOpen" @close="close" @open="open">
         <div class="w-[400px]">
             <div class="flex justify-between items-center">
                 <p class=" text-2xl">Create Todo's</p>
-                <button
-                    class="bg-red-500 w-8 h-8 hover:bg-red-400 flex justify-center items-center text-white"
+                <button class="bg-red-500 w-8 h-8 hover:bg-red-400 flex justify-center items-center text-white"
                     @click="isModalOpen = false">
                     <small>X</small></button>
             </div>

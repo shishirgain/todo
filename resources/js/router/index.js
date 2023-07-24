@@ -6,9 +6,12 @@ import Guest from '../layout/Guest.vue'
 
 // views
 import Home from '../views/Home.vue'
+import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
-import Profile from '../views/Profile.vue'
+
+// const Home = () => import('../views/Home.vue')
+// const Profile = () => import('../views/Profile.vue')
 
 const router = createRouter({
     history: createWebHashHistory(),

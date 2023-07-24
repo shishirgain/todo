@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,8 @@ Route::post('/registration', function () {})->name('auth.registration');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/me', [UserController::class, 'me']);
-    Route::apiResource('todos', TodoController::class);
+    Route::apiResource('/todos', TodoController::class);
+    Route::apiResource('/profile', ProfileController::class);
 
     // logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
