@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import { VitePWA } from 'vite-plugin-pwa'
+import manifest from './manifest';
 
 export default defineConfig({
     plugins: [
@@ -25,6 +27,16 @@ export default defineConfig({
                     includeAbsolute: false,
                 },
             },
+        }),
+        VitePWA({
+            registerType: 'autoUpdate',
+            injectRegister: 'auto',
+            outDir: 'public',
+            devOptions: {
+                enabled: true,
+                type: 'module',
+            },
+            manifest
         })
-    ],
+    ]
 });
